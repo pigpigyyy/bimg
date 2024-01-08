@@ -53,6 +53,8 @@ projgen: ## Generate project files for all configurations.
 	$(GENIE)                                --gcc=wasm            gmake
 	$(GENIE)                                --gcc=ios-arm         gmake
 	$(GENIE)                                --gcc=ios-arm64       gmake
+	$(GENIE)                                --gcc=ios-simulator   gmake
+	$(GENIE)                                --gcc=ios-simulator64 gmake
 	$(GENIE)                                --gcc=rpi             gmake
 
 .build/projects/gmake-android-arm:
@@ -182,6 +184,22 @@ ios-arm64-debug: .build/projects/gmake-ios-arm64 ## Build - iOS ARM64 Debug
 ios-arm64-release: .build/projects/gmake-ios-arm64 ## Build - iOS ARM64 Release
 	$(MAKE) -R -C .build/projects/gmake-ios-arm64 config=release
 ios-arm64: ios-arm64-debug ios-arm64-release ## Build - iOS ARM64 Debug and Release
+
+.build/projects/gmake-ios-simulator:
+	$(GENIE) --gcc=ios-simulator gmake
+ios-simulator-debug: .build/projects/gmake-ios-simulator ## Build - iOS Simulator Debug
+	$(MAKE) -R -C .build/projects/gmake-ios-simulator config=debug
+ios-simulator-release: .build/projects/gmake-ios-simulator ## Build - iOS Simulator Release
+	$(MAKE) -R -C .build/projects/gmake-ios-simulator config=release
+ios-simulator: ios-simulator-debug ios-simulator-release ## Build - iOS Simulator Debug and Release
+
+.build/projects/gmake-ios-simulator64:
+	$(GENIE) --gcc=ios-simulator64 gmake
+ios-simulator64-debug: .build/projects/gmake-ios-simulator64 ## Build - iOS Simulator 64 Debug
+	$(MAKE) -R -C .build/projects/gmake-ios-simulator64 config=debug
+ios-simulator64-release: .build/projects/gmake-ios-simulator64 ## Build - iOS Simulator 64 Release
+	$(MAKE) -R -C .build/projects/gmake-ios-simulator64 config=release
+ios-simulator64: ios-simulator64-debug ios-simulator64-release ## Build - iOS Simulator 64 Debug and Release
 
 .build/projects/gmake-rpi:
 	$(GENIE) --gcc=rpi gmake
